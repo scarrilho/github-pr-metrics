@@ -5,14 +5,10 @@ import pytz
 import csv
 
 # Set your repo info here.
-# Example: for https://github.com/scarrilho/github-pr-metrics
-OWNER = 'scarrilho'
-REPO_NAME = 'github-pr-metrics'
+# Example: for https://github.com/microsoft/TypeScript
+OWNER = 'microsoft'
+REPO_NAME = 'TypeScript'
 USER_TO_IGNORE = 'Automated User'  # Optional
-
-# True for GitHub Enterprise repos, False for public repos
-# If True, in your shell, export you token: export GITHUB_API_TOKEN=your-token
-NEEDS_AUTHENTICATION = True
 
 # Adjust num of PRs to be retrieved
 MAX_NUM_PAGES = 5
@@ -32,6 +28,12 @@ date_format = '%Y-%m-%dT%H:%M:%SZ'
 class RequestHelper:
     server_timezone = pytz.timezone('UTC')
     tokyo_timezone = pytz.timezone('Asia/Tokyo')  # Using Tokyo time
+
+    # In your shell, export you token: export GITHUB_API_TOKEN=your-token
+    github_token = os.environ['GITHUB_API_TOKEN']
+
+    # Or hardcode your token below
+    # github_token = 'your-token'
 
     def fetch_prs_listing_page(self, page):
         url = LISTING_BASE_URL + str(page)
@@ -61,18 +63,9 @@ class RequestHelper:
         return datetime_in_tokyo
 
     def execute_request(self, url):
-        if NEEDS_AUTHENTICATION == False:
-            return requests.get(url)
-        else:
-            # In your shell, export you token: export GITHUB_API_TOKEN=your-token
-            github_token = os.environ['GITHUB_API_TOKEN']
-
-            # Or hardcode your token below
-            # github_token = 'your-token'
-
-            auth_info = 'Bearer ' + github_token
-            return requests.get(url, headers={
-                'Authorization': auth_info})
+        auth_info = 'Bearer ' + self.github_token
+        return requests.get(url, headers={
+            'Authorization': auth_info})
 
 
 class CSVWriter:

@@ -1,9 +1,8 @@
-import numpy as np
-import pandas as pd
 import matplotlib.pyplot as plt
+import pandas as pd
 
 # Change this setting as needed
-file_for_analysis = 'pr_data_github-pr-metrics_2023-01-04.csv'
+file_for_analysis = 'pr_data_TypeScript_2023-01-05.csv'
 
 
 class PlotterHelper:
