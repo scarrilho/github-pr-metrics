@@ -132,11 +132,13 @@ class PlotterHelper:
 
     def plot_pr_vs_review_comments(self, df):
         filename = 'pr_vs_review_comments.png'
+        mean = round(df['Review Comments'].mean())
+        annotation_text = 'Average: ' + str(mean)
+
         new_df = df['Review Comments'].value_counts().rename_axis(
             'Comments').reset_index(name='Count').sort_values(['Comments'])
         print(new_df)
-        mean = round(new_df['Comments'].mean())
-        annotation_text = 'Average: ' + str(mean)
+
         new_df['Comments'] = new_df['Comments'].apply(str)
 
         self.plot_single(
@@ -144,11 +146,13 @@ class PlotterHelper:
 
     def plot_pr_size(self, df):
         filename = 'pr_size.png'
+
+        mean = round(df['PR Size'].mean())
+        annotation_text = 'Average size: ' + str(mean)
         new_df = df['PR Size'].value_counts().rename_axis(
             'Size').reset_index(name='Count').sort_values(['Size'])
         print(new_df)
-        mean = round(new_df['Size'].mean())
-        annotation_text = 'Average size: ' + str(mean)
+
         new_df['Size'] = new_df['Size'].apply(str)
 
         self.plot_single(
