@@ -111,7 +111,7 @@ for data in repos:
     pr_num = data['number']
 
     # Ignore PRs that were not merged
-    if data['merged_at'] == None:
+    if data['merged_at'] is None:
         print('Ignoring unmerged PR: ', pr_num)
         continue
 
@@ -161,7 +161,7 @@ for data in repos:
     if result['User'] != USER_TO_IGNORE:
         final_dataset.append(result)
 
-if final_dataset != []:
+if final_dataset:
     csv_writer.write_to_file(final_dataset)
     print('Success. Wrote to file: ', CSVWriter.target_csv_file_name)
 
