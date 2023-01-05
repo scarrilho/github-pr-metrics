@@ -8,7 +8,7 @@ file_for_analysis = 'pr_data_TypeScript_2023-01-05.csv'
 class PlotterHelper:
     def plot_single(self, x, y, x_label, y_label, title, annotation_text, file_name):
         print('Plotting')
-        text_y_position = y.max() - (y.mean()/3)
+        text_y_position = y.max() - (y.mean() / 3)
 
         plt.close('all')
         plt.bar(x, y, color='g')
@@ -59,7 +59,8 @@ class PlotterHelper:
 
         plt.show()
 
-    def plot_triple_filled(self, x, y1, y2, y3, y1_legend, y2_legend, y3_legend, x_label, y_label, title, annotation_text, file_name):
+    def plot_triple_filled(self, x, y1, y2, y3, y1_legend, y2_legend, y3_legend, x_label, y_label, title,
+                           annotation_text, file_name):
         print('Plotting')
         plt.close('all')
         plt.plot(x, y1, color='g', label=y1_legend)
@@ -127,7 +128,8 @@ class PlotterHelper:
         mean = round(new_df['Review Comments'].mean())
         annotation_text = 'Mean: ' + str(mean)
         self.plot_single(
-            new_df['PR Num'], new_df['Review Comments'], 'PR', 'Review Comments', 'Review Comment Count per PR', annotation_text, filename)
+            new_df['PR Num'], new_df['Review Comments'], 'PR', 'Review Comments', 'Review Comment Count per PR',
+            annotation_text, filename)
 
     def plot_pr_size(self, df):
         filename = 'pr_size.png'
@@ -147,34 +149,39 @@ class PlotterHelper:
     def plot_lead_time_vs_pr_size(self, df):
         filename = 'lead_time_vs_pr_size.png'
         self.plot_scatter(
-            df['Lead Time'], df['PR Size'], 'Lead Time (days)', 'PR Size (Additions + Deletions)', 'PR Lead Time vs PR Size', filename)
+            df['Lead Time'], df['PR Size'], 'Lead Time (days)', 'PR Size (Additions + Deletions)',
+            'PR Lead Time vs PR Size', filename)
 
     # To check balance of created vs closed
     def plot_created_closed_daily(self, df):
         filename = 'create_vs_closed_daily.png'
         new_df = self.compute_daily_created_closed_table(df)
         self.plot_double(
-            new_df['Date'], new_df['created'], new_df['closed'], 'Created', 'Closed', 'Date', 'Created/Closed', 'Created vs closed', filename)
+            new_df['Date'], new_df['created'], new_df['closed'], 'Created', 'Closed', 'Date', 'Created/Closed',
+            'Created vs closed', filename)
 
     # To check balance of created vs merged
     def plot_created_merged_daily(self, df):
         filename = 'created_vs_merged_daily.png'
         new_df = self.compute_daily_created_merged_table(df)
         self.plot_double(
-            new_df['Date'], new_df['created'], new_df['merged'], 'Created', 'Merged', 'Date', 'Created/Merged', 'Created vs Merged', filename)
+            new_df['Date'], new_df['created'], new_df['merged'], 'Created', 'Merged', 'Date', 'Created/Merged',
+            'Created vs Merged', filename)
 
     # Check if keeping the code healthy by refactoring or just adding code
     def plot_additions_deletions_scatter(self, df):
         filename = 'additions_vs_deletions.png'
         self.plot_double_scatter(
-            df['Merge Date'], df['Additions'], -df['Deletions'], 'Additions', 'Deletions', 'Merge Date', 'Additions', 'Additions vs Deletions', filename)
+            df['Merge Date'], df['Additions'], -df['Deletions'], 'Additions', 'Deletions', 'Merge Date', 'Additions',
+            'Additions vs Deletions', filename)
 
     # Check if keeping the code healthy by refactoring or just adding code
     def plot_additions_deletions_aggregate(self, df):
         filename = 'additions_vs_deletions_aggregate.png'
         new_df = self.compute_daily_added_deleted_table(df)
         self.plot_double_filled(
-            new_df['Merge Date'], new_df['Additions'], new_df['Deletions'], 'Additions', 'Deletions', 'Merge Date', 'Additions/Deletions', 'Additions vs Deletions', filename)
+            new_df['Merge Date'], new_df['Additions'], new_df['Deletions'], 'Additions', 'Deletions', 'Merge Date',
+            'Additions/Deletions', 'Additions vs Deletions', filename)
 
     # Check if keeping the code healthy by refactoring or just adding code
     def plot_additions_deletions_pr_size_aggregate(self, df):
@@ -186,7 +193,9 @@ class PlotterHelper:
         annotation_text = 'Refactor ratio: ' + str(refactoring_ratio)
 
         self.plot_triple_filled(
-            new_df['Merge Date'], new_df['Additions'], new_df['Deletions'], new_df['PR Size'], 'Additions', 'Deletions', 'PR Size', 'Merge Date', 'Additions/Deletions', 'Additions vs Deletions vs PR Size', annotation_text, filename)
+            new_df['Merge Date'], new_df['Additions'], new_df['Deletions'], new_df['PR Size'], 'Additions', 'Deletions',
+            'PR Size', 'Merge Date', 'Additions/Deletions', 'Additions vs Deletions vs PR Size', annotation_text,
+            filename)
 
     # Check if keeping the code healthy by refactoring or just adding code
     def plot_additions_deletions_aggregate_inverse(self, df):
@@ -195,7 +204,8 @@ class PlotterHelper:
         new_df['Deletions'] = -new_df['Deletions']
 
         self.plot_double_filled(
-            new_df['Merge Date'], new_df['Additions'], new_df['Deletions'], 'Additions', 'Deletions', 'Merge Date', 'Additions/Deletions', 'Additions vs Deletions', filename)
+            new_df['Merge Date'], new_df['Additions'], new_df['Deletions'], 'Additions', 'Deletions', 'Merge Date',
+            'Additions/Deletions', 'Additions vs Deletions', filename)
 
     def compute_daily_created_closed_table(self, df):
         pr_creation_dates = df['Creation Date'].value_counts().rename_axis(
@@ -263,7 +273,7 @@ class StatsHelper:
         print(df.describe())
 
     def abort_on_empty_df(df):
-        if df.empty == True:
+        if df.empty:
             print('---------------------(✘o✘)-------------------------')
             print('Dataframe is empty, aborting execution!')
             print('---------------------------------------------------')
