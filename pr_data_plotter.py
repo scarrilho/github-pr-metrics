@@ -124,11 +124,11 @@ class PlotterHelper:
     def plot_pr_count_vs_date(self, df):
         filename = 'count_vs_date.png'
         new_df = df['Creation Date'].value_counts().rename_axis(
-            'Date').reset_index(name='counts').sort_values('Date')
+            'Date').reset_index(name='Count').sort_values('Date')
         mean = round(new_df['counts'].mean(), 1)
         annotation_text = 'Mean: ' + str(mean)
         self.plot_single(
-            new_df['Date'], new_df['counts'], 'Date', 'PR count', 'Daily Created PR Count', annotation_text, filename)
+            new_df['Date'], new_df['Count'], 'Date', 'PR count', 'Daily Created PR Count', annotation_text, filename)
 
     def plot_pr_vs_review_comments(self, df):
         filename = 'pr_vs_review_comments.png'
@@ -144,14 +144,15 @@ class PlotterHelper:
 
     def plot_pr_size(self, df):
         filename = 'pr_size.png'
-        new_df = df[['PR Num', 'PR Size']]
-        mean = round(new_df['PR Size'].mean())
-        annotation_text = 'Mean: ' + str(mean)
-        new_df = new_df.sort_values('PR Num')
-        new_df['PR Num'] = new_df['PR Num'].apply(str)
+        new_df = df['PR Size'].value_counts().rename_axis(
+            'Size').reset_index(name='Count').sort_values(['Size'])
+        print(new_df)
+        mean = round(new_df['Size'].mean())
+        annotation_text = 'Average size: ' + str(mean)
+        new_df['Size'] = new_df['Size'].apply(str)
 
         self.plot_single(
-            new_df['PR Num'], new_df['PR Size'], 'PR Number', 'PR Size', 'PR Sizes', annotation_text, filename)
+            new_df['Size'], new_df['Count'], 'Size', 'Count', 'PR Sizes', annotation_text, filename)
 
     # Low lead time == good
     def plot_lead_time_vs_additions_scatter(self, df):
