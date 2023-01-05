@@ -120,16 +120,6 @@ class PlotterHelper:
         plt.savefig(file_name)
         plt.show()
 
-    # Number of new PRs daily
-    def plot_pr_count_vs_date(self, df):
-        filename = 'count_vs_date.png'
-        new_df = df['Creation Date'].value_counts().rename_axis(
-            'Date').reset_index(name='Count').sort_values('Date')
-        mean = round(new_df['Count'].mean(), 1)
-        annotation_text = 'Mean: ' + str(mean)
-        self.plot_single(
-            new_df['Date'], new_df['Count'], 'Date', 'Number of PRs', 'Daily Created PR Count', annotation_text, filename)
-
     def plot_pr_vs_review_comments(self, df):
         filename = 'pr_vs_review_comments.png'
         mean = round(df['Review Comments'].mean())
@@ -320,7 +310,6 @@ StatsHelper.abort_on_empty_df(df)
 print(f'Analyzing file: {file_for_analysis}')
 StatsHelper.compute_main_stats(df)
 
-plotter.plot_pr_count_vs_date(df)
 plotter.plot_lead_time_vs_pr_size(df)
 plotter.plot_created_merged_daily(df)
 plotter.plot_additions_deletions_pr_size_aggregate(df)
