@@ -127,7 +127,6 @@ class PlotterHelper:
 
         new_df = df['Review Comments'].value_counts().rename_axis(
             'Comments').reset_index(name='Count').sort_values(['Comments'])
-        print(new_df)
 
         new_df['Comments'] = new_df['Comments'].apply(str)
 
@@ -141,7 +140,6 @@ class PlotterHelper:
         annotation_text = 'Average size: ' + str(mean)
         new_df = df['PR Size'].value_counts().rename_axis(
             'Size').reset_index(name='Count').sort_values(['Size'])
-        print(new_df)
 
         new_df['Size'] = new_df['Size'].apply(str)
 
