@@ -13,6 +13,7 @@ class PlotterHelper:
         plt.close('all')
         plt.bar(x, y, color='g')
         plt.xticks(range(len(x)), x, size='small')
+        plt.xticks(rotation=25)
         plt.locator_params(nbins=10)
         plt.xlabel(x_label)
         plt.ylabel(y_label)
@@ -29,6 +30,7 @@ class PlotterHelper:
         plt.plot(x, y2, color='r', label=y2_legend)
 
         plt.xticks(range(len(x)), x, size='small')
+        plt.xticks(rotation=25)
         plt.locator_params(nbins=10)
         plt.xlabel(x_label)
         plt.ylabel(y_label)
@@ -49,6 +51,7 @@ class PlotterHelper:
         plt.fill_between(x, y2, color='r', alpha=0.3)
 
         plt.xticks(range(len(x)), x, size='small')
+        plt.xticks(rotation=25)
         plt.locator_params(nbins=10)
         plt.xlabel(x_label)
         plt.ylabel(y_label)
@@ -74,6 +77,7 @@ class PlotterHelper:
         text_y_position = y3.max() - y1.mean()
 
         plt.xticks(range(len(x)), x, size='small')
+        plt.xticks(rotation=25)
         plt.locator_params(nbins=10)
         plt.xlabel(x_label)
         plt.ylabel(y_label)
