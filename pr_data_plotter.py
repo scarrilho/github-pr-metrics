@@ -6,12 +6,30 @@ file_for_analysis = 'pr_data_TypeScript_2023-01-05_master.csv'
 
 
 class PlotterHelper:
-    def plot_single(self, x, y, x_label, y_label, title, annotation_text, file_name):
+    def plot_single_bar(self, x, y, x_label, y_label, title, annotation_text, file_name):
         print('Plotting')
 
         plt.close('all')
         plt.clf()
         plt.bar(x, y, color='g', label=annotation_text)
+        plt.xticks(range(len(x)), x, size='small')
+        plt.xticks(rotation=25)
+        plt.locator_params(nbins=10)
+        plt.xlabel(x_label)
+        plt.ylabel(y_label)
+        plt.legend(bbox_to_anchor=(1, 1), loc='upper right',
+                   borderaxespad=1, fontsize=10)
+        plt.title(title, fontsize=20)
+        plt.savefig(file_name)
+        plt.show()
+
+    def plot_single(self, x, y, x_label, y_label, title, annotation_text, file_name):
+        print('Plotting')
+
+        plt.close('all')
+        plt.clf()
+        plt.plot(x, y, color='g', label=annotation_text)
+        plt.fill_between(x, y, color='g', alpha=0.3)
         plt.xticks(range(len(x)), x, size='small')
         plt.xticks(rotation=25)
         plt.locator_params(nbins=10)
@@ -130,11 +148,19 @@ class PlotterHelper:
 
         new_df['Comments'] = new_df['Comments'].apply(str)
 
-        self.plot_single(
+        self.plot_single_bar(
             new_df['Comments'], new_df['Count'], 'Number of Comments', 'Number of PRs', 'Comment Count', annotation_text, filename)
 
     def plot_pr_size(self, df):
         filename = 'pr_size.png'
+        res = df[['PR Num', 'PR Size']]
+        mean = round(res['PR Size'].mean())
+        annotation_text = 'Mean: ' + str(mean)
+        self.plot_single_bar(
+            res['PR Num'], res['PR Size'], 'PRs', 'PR Size', 'PR Sizes', annotation_text, filename)
+
+    def plot_pr_size_aggregate(self, df):
+        filename = 'pr_size_aggregate.png'
 
         mean = round(df['PR Size'].mean())
         annotation_text = 'Average size: ' + str(mean)
@@ -143,7 +169,7 @@ class PlotterHelper:
 
         new_df['Size'] = new_df['Size'].apply(str)
 
-        self.plot_single(
+        self.plot_single_bar(
             new_df['Size'], new_df['Count'], 'Size', 'Count', 'PR Sizes', annotation_text, filename)
 
     # Low lead time == good
