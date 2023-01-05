@@ -20,11 +20,11 @@ The scripts need Python 3 and were not tested on a Windows machine.
 ### pr_data_retriever.py
 The mandatory settings are the repo owner and name. For example, for React it would be:
 ```
-OWNER = 'facebook'
-REPO_NAME = 'react'
+OWNER = 'microsoft'
+REPO_NAME = 'TypeScript'
 ```
 
-The script was made to use in internal repos where authentication is needed, therefore the default **NEEDS_AUTHENTICATION** setting is set to True. In this case, you need to export your GitHub Token in the shell running the script, or otherwise hardcode it in the script.
+The script needs the the GitHub token info to execute the requests. You can either export your GitHub Token in the shell running the script, or otherwise hardcode it in the script (not recommended).
 ```pythonpython
 export GITHUB_API_TOKEN=your-token
 ```
@@ -33,17 +33,6 @@ or hardcode it:
 ```python
 # github_token = os.environ['GITHUB_API_TOKEN']
 github_token = 'your-token'
-```
-
-If 
-or hardcode it:
-the repo public like the above, change the setting NEEDS_AUTHETICATION to False.
-
-If you want to use it in public repos, without the need for authentication, just set **NEEDS_AUTHENTICATION** to false.
-```python
-# True for GitHub Enterprise repos, False for public repos
-# If True, in your shell, export you token: export GITHUB_API_TOKEN=your-token
-NEEDS_AUTHENTICATION = False
 ```
 
 After setting the OWNER and REPO_NAME, and the token if necessary, just run the command:
@@ -56,7 +45,7 @@ The only setting needed is the CSV filename created by **pr_data_retriever.py**.
 
 ```python
 # Change this setting as needed
-file_for_analysis = 'pr_data_react_2023-01-04.csv'
+file_for_analysis = 'pr_data_TypeScript_2023-01-05.csv'
 ```
 
 After setting the file name just run the script: 
