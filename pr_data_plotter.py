@@ -156,7 +156,7 @@ class PlotterHelper:
         res = df[['PR Num', 'PR Size']]
         mean = round(res['PR Size'].mean())
         annotation_text = 'Mean: ' + str(mean)
-        self.plot_single_bar(
+        self.plot_single(
             res['PR Num'], res['PR Size'], 'PRs', 'PR Size', 'PR Sizes', annotation_text, filename)
 
     def plot_pr_size_aggregate(self, df):
