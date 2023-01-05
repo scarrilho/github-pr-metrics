@@ -125,22 +125,22 @@ class PlotterHelper:
         filename = 'count_vs_date.png'
         new_df = df['Creation Date'].value_counts().rename_axis(
             'Date').reset_index(name='Count').sort_values('Date')
-        mean = round(new_df['counts'].mean(), 1)
+        mean = round(new_df['Count'].mean(), 1)
         annotation_text = 'Mean: ' + str(mean)
         self.plot_single(
-            new_df['Date'], new_df['Count'], 'Date', 'PR count', 'Daily Created PR Count', annotation_text, filename)
+            new_df['Date'], new_df['Count'], 'Date', 'Number of PRs', 'Daily Created PR Count', annotation_text, filename)
 
     def plot_pr_vs_review_comments(self, df):
         filename = 'pr_vs_review_comments.png'
-        new_df = df[['PR Num', 'Review Comments']]
-        mean = round(new_df['Review Comments'].mean())
-        annotation_text = 'Mean: ' + str(mean)
-        new_df = new_df.sort_values('PR Num')
-        new_df['PR Num'] = new_df['PR Num'].apply(str)
+        new_df = df['Review Comments'].value_counts().rename_axis(
+            'Comments').reset_index(name='Count').sort_values(['Comments'])
+        print(new_df)
+        mean = round(new_df['Comments'].mean())
+        annotation_text = 'Average: ' + str(mean)
+        new_df['Comments'] = new_df['Comments'].apply(str)
 
         self.plot_single(
-            new_df['PR Num'], new_df['Review Comments'], 'PR Number', 'Review Comments', 'Review Comment Count per PR',
-            annotation_text, filename)
+            new_df['Comments'], new_df['Count'], 'Number of Comments', 'Number of PRs', 'Comment Count', annotation_text, filename)
 
     def plot_pr_size(self, df):
         filename = 'pr_size.png'
