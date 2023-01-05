@@ -2,23 +2,23 @@ import matplotlib.pyplot as plt
 import pandas as pd
 
 # Change this setting as needed
-file_for_analysis = 'pr_data_TypeScript_2023-01-05.csv'
+file_for_analysis = 'pr_data_TypeScript_2023-01-05_master.csv'
 
 
 class PlotterHelper:
     def plot_single(self, x, y, x_label, y_label, title, annotation_text, file_name):
         print('Plotting')
-        text_y_position = y.max() - (y.mean() / 3)
 
         plt.close('all')
-        plt.bar(x, y, color='g')
+        plt.clf()
+        plt.bar(x, y, color='g', label=annotation_text)
         plt.xticks(range(len(x)), x, size='small')
         plt.xticks(rotation=25)
         plt.locator_params(nbins=10)
         plt.xlabel(x_label)
         plt.ylabel(y_label)
-        plt.text(0, text_y_position, annotation_text, fontsize=13,
-                 bbox=dict(facecolor='red', alpha=0.5))
+        plt.legend(bbox_to_anchor=(1, 1), loc='upper right',
+                   borderaxespad=1, fontsize=10)
         plt.title(title, fontsize=20)
         plt.savefig(file_name)
         plt.show()
@@ -74,8 +74,6 @@ class PlotterHelper:
 
         plt.plot(x, y3, color='b', label=y3_legend)
 
-        text_y_position = y3.max() - y1.mean()
-
         plt.xticks(range(len(x)), x, size='small')
         plt.xticks(rotation=25)
         plt.locator_params(nbins=10)
@@ -84,8 +82,14 @@ class PlotterHelper:
         plt.title(title, fontsize=20)
         plt.legend(bbox_to_anchor=(1, 1), loc='upper right',
                    borderaxespad=1, fontsize=10)
-        plt.text(0, text_y_position, annotation_text, fontsize=13,
-                 bbox=dict(facecolor='red', alpha=0.5))
+
+        xmin, xmax, ymin, ymax = plt.axis()
+        text_x_position = xmax / 2
+        text_y_position = ymax - (ymax / 10)
+
+        plt.text(text_x_position, text_y_position, annotation_text, fontsize=13,horizontalalignment="center",
+        verticalalignment="center",bbox=dict(facecolor='red', alpha=0.5))
+
         plt.savefig(file_name)
 
         plt.show()
@@ -131,8 +135,11 @@ class PlotterHelper:
         new_df = df[['PR Num', 'Review Comments']]
         mean = round(new_df['Review Comments'].mean())
         annotation_text = 'Mean: ' + str(mean)
+        new_df = new_df.sort_values('PR Num')
+        new_df['PR Num'] = new_df['PR Num'].apply(str)
+
         self.plot_single(
-            new_df['PR Num'], new_df['Review Comments'], 'PR', 'Review Comments', 'Review Comment Count per PR',
+            new_df['PR Num'], new_df['Review Comments'], 'PR Number', 'Review Comments', 'Review Comment Count per PR',
             annotation_text, filename)
 
     def plot_pr_size(self, df):
@@ -140,8 +147,11 @@ class PlotterHelper:
         new_df = df[['PR Num', 'PR Size']]
         mean = round(new_df['PR Size'].mean())
         annotation_text = 'Mean: ' + str(mean)
+        new_df = new_df.sort_values('PR Num')
+        new_df['PR Num'] = new_df['PR Num'].apply(str)
+
         self.plot_single(
-            new_df['PR Num'], new_df['PR Size'], 'PRs', 'PR Size', 'PR Sizes', annotation_text, filename)
+            new_df['PR Num'], new_df['PR Size'], 'PR Number', 'PR Size', 'PR Sizes', annotation_text, filename)
 
     # Low lead time == good
     def plot_lead_time_vs_additions_scatter(self, df):
