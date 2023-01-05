@@ -5,9 +5,9 @@ import pytz
 import csv
 
 # Set your repo info here.
-# Example: for https://github.com/scarrilho/github-pr-metrics
-OWNER = 'scarrilho'
-REPO_NAME = 'github-pr-metrics'
+# Example: for https://github.com/microsoft/TypeScript
+OWNER = 'microsoft'
+REPO_NAME = 'TypeScript'
 USER_TO_IGNORE = 'Automated User'  # Optional
 
 # Adjust num of PRs to be retrieved
